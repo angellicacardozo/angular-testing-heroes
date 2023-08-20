@@ -5,18 +5,21 @@ import { FormsModule } from '@angular/forms';
 import { HighlightDirective } from './highlight.directive';
 import { TitleCasePipe } from './title-case.pipe';
 import { CanvasComponent } from './canvas.component';
+import { MenuItemComponent } from './menu-item/menu-item.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [ CommonModule ],
+  imports: [ CommonModule, RouterModule ],
   exports: [
     CommonModule,
     // SharedModule importers won't have to import FormsModule too
     FormsModule,
+    RouterModule,
     HighlightDirective,
     TitleCasePipe,
     CanvasComponent
   ],
-  declarations: [ HighlightDirective, TitleCasePipe, CanvasComponent ]
+  declarations: [ HighlightDirective, TitleCasePipe, CanvasComponent, MenuItemComponent ]
 })
 export class SharedModule { }
 
