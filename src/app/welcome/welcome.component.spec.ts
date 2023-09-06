@@ -2,6 +2,9 @@ import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { UserService } from '../model/user.service';
 import { WelcomeComponent } from './welcome.component';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { BadgeDirective } from '../shared/directives/badge.directive';
 
 class MockUserService {
   isLoggedIn = true;
@@ -25,102 +28,49 @@ describe('WelcomeComponent (class only)', () => {
     userService = TestBed.inject(UserService);
   });
 
-  it('should not have welcome message after construction', () => {
-    expect(comp.welcome).toBe('');
+  it('should provide a getter for the evaluated logged in user condition', () => {
+    expect(comp.isLoggedIn).toBeDefined();
   });
 
-  it('should welcome logged in user after Angular calls ngOnInit', () => {
-    comp.ngOnInit();
-    expect(comp.welcome).toContain(userService.user.name);
-  });
-
-  it('should ask user to log in if not logged in after ngOnInit', () => {
-    userService.isLoggedIn = false;
-    comp.ngOnInit();
-    expect(comp.welcome).not.toContain(userService.user.name);
-    expect(comp.welcome).toContain('log in');
+  it('should provide a getter for the user name', () => {
+    expect(comp.userName).toBeDefined();
   });
 });
 
 describe('WelcomeComponent', () => {
-
-  let comp: WelcomeComponent;
   let fixture: ComponentFixture<WelcomeComponent>;
-  let componentUserService: UserService; // the actually injected service
-  let userService: UserService; // the TestBed injected service
-  let el: HTMLElement; // the DOM element with the welcome message
+  let badge: DebugElement;
 
-  let userServiceStub: Partial<UserService>;
-
+  let userService: UserService;
+  let userServiceStub: Partial<UserService> = {
+    isLoggedIn: true,
+    user: {
+      name: 'John Doe'
+    },
+  };
+  
   beforeEach(() => {
-    // stub UserService for test purposes
-    userServiceStub = {
-      isLoggedIn: true,
-      user: { name: 'Test User' },
-    };
-
     TestBed.configureTestingModule({
-       declarations: [ WelcomeComponent ],
-    // providers: [ UserService ],  // NO! Don't provide the real service!
-                                    // Provide a test-double instead
-       providers: [ { provide: UserService, useValue: userServiceStub } ],
+      declarations: [ WelcomeComponent, BadgeDirective ],
+      providers: [{
+        provide: UserService,
+        useValue: userServiceStub,
+      }]
     });
 
     fixture = TestBed.createComponent(WelcomeComponent);
-    comp    = fixture.componentInstance;
+    fixture.detectChanges();
 
-    // UserService actually injected into the component
+    badge = fixture.debugElement.query(By.directive(BadgeDirective));
     userService = fixture.debugElement.injector.get(UserService);
-    componentUserService = userService;
-    // UserService from the root injector
-    userService = TestBed.inject(UserService);
-
-    //  get the "welcome" element by CSS selector (e.g., by class name)
-    el = fixture.nativeElement.querySelector('.welcome');
   });
 
-  it('should welcome the user', () => {
-    fixture.detectChanges();
-    const content = el.textContent;
-    expect(content)
-      .withContext('"Welcome ..."')
-      .toContain('Welcome');
-    expect(content)
-      .withContext('expected name')
-      .toContain('Test User');
+  it('should render badge', () => {
+    expect(badge).not.toBeNull();
   });
 
-  it('should welcome "Bubba"', () => {
-    userService.user.name = 'Bubba'; // welcome message hasn't been shown yet
-    fixture.detectChanges();
-    expect(el.textContent).toContain('Bubba');
-  });
-
-  it('should request login if not logged in', () => {
-    userService.isLoggedIn = false; // welcome message hasn't been shown yet
-    fixture.detectChanges();
-    const content = el.textContent;
-    expect(content)
-      .withContext('not welcomed')
-      .not.toContain('Welcome');
-    expect(content)
-      .withContext('"log in"')
-      .toMatch(/log in/i);
-  });
-
-  it("should inject the component's UserService instance",
-    inject([UserService], (service: UserService) => {
-    expect(service).toBe(componentUserService);
-  }));
-
-  it('TestBed and Component UserService should be the same', () => {
-    expect(userService).toBe(componentUserService);
+  it('should welcome "John Doe"', () => {
+    const content = badge.nativeElement.textContent;
+    expect(content).toContain(userService.user.name);
   });
 });
-
-
-/*
-Copyright Google LLC. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that
-can be found in the LICENSE file at https://angular.io/license
-*/

@@ -8,6 +8,8 @@ import { CanvasComponent } from './canvas.component';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { RouterModule } from '@angular/router';
 
+import { BadgeDirective } from './directives/badge.directive';
+
 @NgModule({
   imports: [ CommonModule, RouterModule ],
   exports: [
@@ -16,10 +18,11 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     RouterModule,
     HighlightDirective,
+    BadgeDirective,
     TitleCasePipe,
     CanvasComponent
   ],
-  declarations: [ HighlightDirective, TitleCasePipe, CanvasComponent, MenuItemComponent ]
+  declarations: [ HighlightDirective, BadgeDirective, TitleCasePipe, CanvasComponent, MenuItemComponent ]
 })
 export class SharedModule { }
 

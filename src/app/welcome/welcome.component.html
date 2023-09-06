@@ -1,0 +1,11 @@
+<div *ngIf="isLoggedIn; else loginAction">
+  <div appBadge>
+    {{ userName }}
+  </div>
+</div>
+
+<ng-template #loginAction>
+  <div appBadge>
+    Please, log in.
+  </div>
+</ng-template>
