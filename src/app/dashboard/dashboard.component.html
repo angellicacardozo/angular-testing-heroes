@@ -1,29 +1,21 @@
-<div class="border grid grid-cols-12 gap-4">
-  <div class="border col-span-6">
-    <span>Heroes are indispensable</span>
-    <h2>Each hero has it's own show</h2>
-    
+<div class="grid grid-cols-12 gap-4 bg-white">
+  <div class="col-span-6 flex items-center justify-end">
     <div>
-      <a>Click here to see all shows</a>
-      <a>Watch live</a>
-    </div>
-    
-    <div>
-      <span>X Total Heroes</span>
-    </div>
+      <span class="text-sky-500 capitalize">Testing is indispensable</span>
+      <h2 class="text-blue-950 font-bold text-2xl mt-2 mb-4">Your application <span class="text-rose-500">working</span> as you expect</h2>
 
-    <div>
-      <h2 highlight>{{title}}</h2>
-
-      <div class="grid grid-pad">
-        <dashboard-hero *ngFor="let hero of heroes"  class="col-1-4"
-          [hero]=hero  (selected)="gotoDetail($event)" >
-        </dashboard-hero>
+      <div>
+        <h2>{{title}}</h2>
+        <div class="flex flex-col gap-2 pt-4">
+          <dashboard-hero *ngFor="let hero of heroes"
+            [hero]=hero  (selected)="gotoDetail($event)" >
+          </dashboard-hero>
+        </div>
       </div>
     </div>
   </div>
   
-  <div class="border col-span-6">
-    <span>Banner here</span>
+  <div class="col-span-6">
+    <img src="assets/banner.png" />
   </div>
 </div>
