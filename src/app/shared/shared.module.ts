@@ -9,6 +9,7 @@ import { MenuItemComponent } from './menu-item/menu-item.component';
 import { RouterModule } from '@angular/router';
 
 import { BadgeDirective } from './directives/badge.directive';
+import { NavButtonDirective } from './directives/nav-button.directive';
 
 @NgModule({
   imports: [ CommonModule, RouterModule ],
@@ -19,10 +20,18 @@ import { BadgeDirective } from './directives/badge.directive';
     RouterModule,
     HighlightDirective,
     BadgeDirective,
+    NavButtonDirective,
     TitleCasePipe,
     CanvasComponent
   ],
-  declarations: [ HighlightDirective, BadgeDirective, TitleCasePipe, CanvasComponent, MenuItemComponent ]
+  declarations: [ 
+    HighlightDirective, 
+    BadgeDirective,
+    NavButtonDirective, 
+    TitleCasePipe, 
+    CanvasComponent, 
+    MenuItemComponent 
+  ]
 })
 export class SharedModule { }
 
