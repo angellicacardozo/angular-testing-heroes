@@ -5,7 +5,7 @@ import { Hero } from '../model/hero';
 @Component({
   selector: 'dashboard-hero',
   template: `
-    <div class="flex flex-row items-center p-2 justify-between cursor-pointer">
+    <div (click)="click()" class="hero flex flex-row items-center p-2 justify-between cursor-pointer">
         <div class="flex flex-row gap-4 items-center">
           <div class="rounded-full border-4 border-orange-100 w-12 h-12 flex items-center justify-center">
             <span>B</span>
@@ -16,8 +16,7 @@ import { Hero } from '../model/hero';
           Details
         </a>
     </div>
-  `,
-  styleUrls: [ './dashboard-hero.component.css' ]
+  `
 })
 export class DashboardHeroComponent {
   @Input() hero!: Hero;

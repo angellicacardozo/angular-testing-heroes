@@ -1,21 +1,38 @@
-<div class="flex flex-row gap-4 bg-white pl-4 pt-4">
-  <div class="col-span-6 flex items-center md:justify-end w-4/6 md:w-3/6">
+<div class="flex flex-row gap-4 bg-white h-full pl-4">
+  <div class="col-span-6 flex pt-4 lg:items-center md:justify-end w-4/6 md:w-3/6">
     <div>
       <span class="text-sky-500 capitalize">Testing is indispensable</span>
       <h2 class="text-blue-950 font-bold text-2xl mt-2 mb-4">Your application <span class="text-rose-500">working</span> as you expect</h2>
 
       <div>
-        <h2>{{title}}</h2>
+        <h2>Top heroes</h2>
         <div class="flex flex-col gap-2 pt-4">
-          <dashboard-hero *ngFor="let hero of heroes"
-            [hero]=hero  (selected)="gotoDetail($event)" >
-          </dashboard-hero>
+          <div *ngIf="heroes$ | async as heroes; else skeleton">
+            <dashboard-hero *ngFor="let hero of heroes"
+              [hero]=hero  (selected)="gotoDetail($event)" >
+            </dashboard-hero>
+          </div>
+          <ng-template #skeleton>
+            <div class="p-2" *ngFor="let _ of [].constructor(4)">
+              <div class="animate-pulse flex space-x-4">
+                <div class="rounded-full bg-slate-200 h-12 w-12"></div>
+                <div class="flex-1 space-y-6 py-4">
+                  <div class="space-y-6">
+                    <div class="grid grid-cols-3 gap-4">
+                      <div class="h-2 bg-slate-200 rounded col-span-2"></div>
+                      <div class="h-2 bg-slate-200 rounded col-span-1"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>
   </div>
   
-  <div class="w-2/6 md:w-3/6 flex items-center">
+  <div class="w-2/6 md:w-3/6 flex items-start lg:items-center">
     <img src="assets/banner.png" />
   </div>
 </div>
