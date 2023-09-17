@@ -5,9 +5,14 @@ import { Hero } from '../model/hero';
 @Component({
   selector: 'dashboard-hero',
   template: `
-    <div class="flex flex-row gap-2 items-center">
-        <span>{{ hero.name | uppercase }}</span>
-        <a class="border-4 border-white rounded-full p-2 text-xs uppercase tracking-wide text-stone-600 font-semibold" (click)="click()">
+    <div class="flex flex-row items-center p-2 justify-between cursor-pointer">
+        <div class="flex flex-row gap-4 items-center">
+          <div class="rounded-full border-4 border-orange-100 w-12 h-12 flex items-center justify-center">
+            <span>B</span>
+          </div>
+          <span>{{ hero.name | uppercase }}</span>
+        </div>
+        <a class="border-4 border-orange-100 rounded-full p-2 text-xs uppercase tracking-wide text-stone-600 font-semibold" (click)="click()">
           Details
         </a>
     </div>
