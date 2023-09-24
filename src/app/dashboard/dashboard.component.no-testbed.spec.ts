@@ -24,20 +24,12 @@ describe('DashboardComponent class only', () => {
   });
 
   it('should NOT have heroes before calling OnInit', () => {
-    comp.heroes$.subscribe((heroes) => {
-      expect(heroes.length)
-      .withContext('should not have heroes before OnInit')
-      .toBe(0);
-    });
+    expect(comp.heroes$).not.toBeDefined();
   });
 
-  it('should NOT have heroes immediately after OnInit', () => {
-    comp.ngOnInit(); // ngOnInit -> getHeroes
-    comp.heroes$.subscribe((heroes) => {
-      expect(heroes.length)
-      .withContext('should not have heroes until service promise resolves')
-      .toBe(0);
-    });
+  it('should assign to heroes observable immediately after OnInit', () => {
+    comp.ngOnInit();
+    expect(comp.heroes$).toBeDefined();
   });
 
   it('should HAVE heroes after HeroService gets them', (done: DoneFn) => {
@@ -49,10 +41,11 @@ describe('DashboardComponent class only', () => {
         expect(heroes.length)
         .withContext('should have heroes after service promise resolves')
         .toBeGreaterThan(0);
-        done();
-      }),
-      catchError(async () => done.fail)
-    );
+      })
+    ).subscribe({
+      next: () => done(),
+      error: done.fail
+    });
   });
 
   it('should tell ROUTER to navigate by hero id', () => {
