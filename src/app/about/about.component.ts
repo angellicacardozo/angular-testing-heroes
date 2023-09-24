@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 @Component({
   template: `
-  <h2 highlight="skyblue">About</h2>
-  <h3>Quote of the day:</h3>
-  <twain-quote></twain-quote>
+    <div class="flex flex-col gap-4 bg-white h-full pl-4">
+      <h2 class="text-blue-950 font-bold text-2xl mt-2 mb-4">About</h2>
+      <h3>Quote of the day:</h3>
+      <twain-quote></twain-quote>
+    </div>
   `
 })
 export class AboutComponent { }
