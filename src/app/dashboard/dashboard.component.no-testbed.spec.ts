@@ -5,6 +5,7 @@ import { Hero } from '../model/hero';
 
 import { addMatchers } from '../../testing';
 import { TestHeroService } from '../model/testing/test-hero.service';
+import { switchMap, from, tap, catchError } from 'rxjs';
 
 class FakeRouter {
   navigateByUrl(url: string) { return url;  }
@@ -23,31 +24,35 @@ describe('DashboardComponent class only', () => {
   });
 
   it('should NOT have heroes before calling OnInit', () => {
-    expect(comp.heroes.length)
+    comp.heroes$.subscribe((heroes) => {
+      expect(heroes.length)
       .withContext('should not have heroes before OnInit')
       .toBe(0);
+    });
   });
 
   it('should NOT have heroes immediately after OnInit', () => {
     comp.ngOnInit(); // ngOnInit -> getHeroes
-    expect(comp.heroes.length)
+    comp.heroes$.subscribe((heroes) => {
+      expect(heroes.length)
       .withContext('should not have heroes until service promise resolves')
       .toBe(0);
+    });
   });
 
   it('should HAVE heroes after HeroService gets them', (done: DoneFn) => {
     comp.ngOnInit(); // ngOnInit -> getHeroes
-    heroService.lastResult // the one from getHeroes
-      .subscribe({
-        next: () => {
-        // throw new Error('deliberate error'); // see it fail gracefully
-          expect(comp.heroes.length)
-            .withContext('should have heroes after service promise resolves')
-            .toBeGreaterThan(0);
-          done();
-        },
-        error: done.fail
-      });
+    from(heroService.lastResult)
+    .pipe(
+      switchMap(() => comp.heroes$),
+      tap((heroes) => {
+        expect(heroes.length)
+        .withContext('should have heroes after service promise resolves')
+        .toBeGreaterThan(0);
+        done();
+      }),
+      catchError(async () => done.fail)
+    );
   });
 
   it('should tell ROUTER to navigate by hero id', () => {

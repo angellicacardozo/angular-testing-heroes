@@ -55,7 +55,9 @@ describe('DashboardComponent (shallow)', () => {
   function clickForShallow() {
     // get first <dashboard-hero> DebugElement
     const heroDe = harness.routeDebugElement!.query(By.css('dashboard-hero'));
-    heroDe.triggerEventHandler('selected', comp.heroes[0]);
+    comp.heroes$.subscribe((heroes) => {
+      heroDe.triggerEventHandler('selected', heroes[0]);
+    });
     return Promise.resolve();
   }
 });
@@ -96,9 +98,11 @@ function tests(heroClick: () => Promise<unknown>) {
     }));
 
     it('should HAVE heroes', () => {
-      expect(comp.heroes.length)
+      comp.heroes$.subscribe((heroes) => {
+        expect(heroes.length)
           .withContext('should have heroes after service promise resolves')
           .toBeGreaterThan(0);
+      });
     });
 
     it('should DISPLAY heroes', () => {
@@ -112,10 +116,12 @@ function tests(heroClick: () => Promise<unknown>) {
       await heroClick();  // trigger click on first inner <div class="hero">
 
       // expecting to navigate to id of the component's first hero
-      const id = comp.heroes[0].id;
-      expect(TestBed.inject(Router).url)
-          .withContext('should nav to HeroDetail for first hero')
-          .toEqual(`/heroes/${id}`);
+      comp.heroes$.subscribe((heroes) => {
+        const id = heroes[0].id;
+        expect(TestBed.inject(Router).url)
+            .withContext('should nav to HeroDetail for first hero')
+            .toEqual(`/heroes/${id}`);
+      });
     });
   });
 }
