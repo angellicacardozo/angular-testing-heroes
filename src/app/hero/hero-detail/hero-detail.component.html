@@ -1,13 +1,15 @@
-<div *ngIf="hero">
-  <h2><span>{{hero.name | titlecase}}</span> Details</h2>
+<div *ngIf="hero" class="flex flex-col gap-4 bg-white h-full pl-4">
+  <h2 class="text-blue-950 font-bold text-2xl mt-2 mb-4"><span>{{hero.name | titlecase}}</span> Details</h2>
   <div>
     <span>id: </span>{{hero.id}}</div>
   <div>
     <label for="name">name: </label>
-    <input id="name" [(ngModel)]="hero.name" placeholder="name" />
+    <input class="px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500 disabled:shadow-none" id="name" [(ngModel)]="hero.name" placeholder="name" />
   </div>
-  <button type="button" (click)="save()">Save</button>
-  <button type="button" (click)="cancel()">Cancel</button>
+  <div class="flex flex-row gap-2">
+    <button class="bg-sky-500 hover:bg-sky-700 px-5 py-2.5 text-sm leading-5 rounded-md font-semibold text-white" type="button" (click)="save()">Save</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
 </div>
 
 
