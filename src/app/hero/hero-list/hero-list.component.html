@@ -1,0 +1,18 @@
+<div class="flex flex-col gap-4 bg-white h-full pl-4">
+  <h2 class="text-blue-950 font-bold text-2xl mt-2 mb-4">My Heroes</h2>
+  <ul class="heroes">
+    <li *ngFor="let hero of heroes | async ">
+      <button [class.selected]="hero === selectedHero" type="button" (click)="onSelect(hero)">
+        <span class="badge">{{hero.id}}</span>
+        <span class="name">{{hero.name}}</span>
+      </button>
+    </li>
+  </ul>
+</div>
+
+
+<!-- 
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://angular.io/license
+-->

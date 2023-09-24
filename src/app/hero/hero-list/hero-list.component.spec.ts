@@ -2,17 +2,15 @@ import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync
 } from '@angular/core/testing';
 
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { addMatchers } from '../../testing';
-import { HeroService } from '../model/hero.service';
-import { getTestHeroes, TestHeroService } from '../model/testing/test-hero.service';
+import { addMatchers } from '../../../testing';
+import { HeroService } from '../../model/hero.service';
+import { getTestHeroes, TestHeroService } from '../../model/testing/test-hero.service';
 
-import { HeroModule } from './hero.module';
+import { HeroModule } from '../hero.module';
 import { HeroListComponent } from './hero-list.component';
-import { HighlightDirective } from '../shared/highlight.directive';
 
 const HEROES = getTestHeroes();
 
@@ -87,30 +85,6 @@ describe('HeroListComponent', () => {
         .withContext('expected hero.id')
         .toBe(expectedHero.id);
      }));
-
-  it('should find `HighlightDirective` with `By.directive', () => {
-    // Can find DebugElement either by css selector or by directive
-    const h2 = fixture.debugElement.query(By.css('h2'));
-    const directive = fixture.debugElement.query(By.directive(HighlightDirective));
-    expect(h2).toBe(directive);
-  });
-
-  it('should color header with `HighlightDirective`', () => {
-    const h2 = page.highlightDe.nativeElement as HTMLElement;
-    const bgColor = h2.style.backgroundColor;
-
-    // different browsers report color values differently
-    const isExpectedColor = bgColor === 'gold' || bgColor === 'rgb(255, 215, 0)';
-    expect(isExpectedColor)
-      .withContext('backgroundColor')
-      .toBe(true);
-  });
-
-  it("the `HighlightDirective` is among the element's providers", () => {
-    expect(page.highlightDe.providerTokens)
-      .withContext('HighlightDirective')
-      .toContain(HighlightDirective);
-  });
 });
 
 /////////// Helpers /////
@@ -135,18 +109,12 @@ class Page {
   /** Hero line elements */
   heroRows: HTMLLIElement[];
 
-  /** Highlighted DebugElement */
-  highlightDe: DebugElement;
-
   /** Spy on router navigate method */
   navSpy: jasmine.Spy;
 
   constructor() {
     const heroRowNodes = fixture.nativeElement.querySelectorAll('li');
     this.heroRows = Array.from(heroRowNodes);
-
-    // Find the first element with an attached HighlightDirective
-    this.highlightDe = fixture.debugElement.query(By.directive(HighlightDirective));
 
     // Get the component's injected router navigation spy
     const routerSpy = fixture.debugElement.injector.get(Router);

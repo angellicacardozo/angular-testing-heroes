@@ -4,14 +4,14 @@ import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {provideRouter, Router} from '@angular/router';
 import {RouterTestingHarness} from '@angular/router/testing';
 
-import {asyncData, click} from '../../testing';
-import {Hero} from '../model/hero';
-import {SharedModule} from '../shared/shared.module';
+import {asyncData, click} from '../../../testing';
+import {Hero} from '../../model/hero';
+import {SharedModule} from '../../shared/shared.module';
 
 import {HeroDetailComponent} from './hero-detail.component';
 import {HeroDetailService} from './hero-detail.service';
-import {HeroListComponent} from './hero-list.component';
-import {HeroModule} from './hero.module';
+import {HeroListComponent} from './../hero-list/hero-list.component';
+import {HeroModule} from '../hero.module';
 
 ////// Testing Vars //////
 let component: HeroDetailComponent;
@@ -106,7 +106,7 @@ function overrideSetup() {
 }
 
 ////////////////////
-import {getTestHeroes} from '../model/testing/test-hero.service';
+import {getTestHeroes} from '../../model/testing/test-hero.service';
 
 const firstHero = getTestHeroes()[0];
 
@@ -189,7 +189,7 @@ function heroModuleSetup() {
 
 /////////////////////
 import {FormsModule} from '@angular/forms';
-import {TitleCasePipe} from '../shared/title-case.pipe';
+import {TitleCasePipe} from '../../shared/title-case.pipe';
 
 function formsModuleSetup() {
   beforeEach(async () => {

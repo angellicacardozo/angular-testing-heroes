@@ -75,7 +75,7 @@ describe('AppComponent & router testing', () => {
 ///////////////
 
 import {HeroModule} from './hero/hero.module';  // should be lazy loaded
-import {HeroListComponent} from './hero/hero-list.component';
+import {HeroListComponent} from './hero/hero-list/hero-list.component';
 
 ///////// Can't get lazy loaded Heroes to work yet
 xdescribe('AppComponent & Lazy Loading (not working yet)', () => {
